@@ -12,7 +12,7 @@
 
 <meta name="author" content="Daeyoung Lim" />
 
-<meta name="date" content="2021-02-18" />
+<meta name="date" content="2021-04-20" />
 
 <title>Introduction to metapack</title>
 
@@ -391,7 +391,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Introduction to metapack</h1>
 <h4 class="author">Daeyoung Lim</h4>
-<h4 class="date">2021-02-18</h4>
+<h4 class="date">2021-04-20</h4>
 
 
 
@@ -591,7 +591,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 \end{equation}\]</span></p>
 <p>and <span class="math inline">\((n_{tk}-1)S_{tk} \sim \mathcal{W}_{n_{tk}-1}(\Sigma_{tk})\)</span> where <span class="math inline">\(\boldsymbol{X}_{tk} = \mathrm{blockdiag}(\boldsymbol{x}_{tk1}^\prime,\boldsymbol{x}_{tk2}^\prime,\ldots,\boldsymbol{x}_{tkJ}^\prime)\)</span>, <span class="math inline">\(\boldsymbol{\beta} = (\boldsymbol{\beta}_1^\prime, \cdots, \boldsymbol{\beta}_J^\prime)^\prime\)</span>, <span class="math inline">\(\boldsymbol{W}_{tk}=\mathrm{blockdiag}(\boldsymbol{w}_{tk1}^\prime, \ldots,\boldsymbol{w}_{tkJ}^\prime)\)</span>, <span class="math inline">\(\boldsymbol{\gamma}_k = (\boldsymbol{\gamma}_{k1}^\prime,\boldsymbol{\gamma}_{k2}^\prime, \ldots,\boldsymbol{\gamma}_{kJ}^\prime)^\prime\)</span>, <span class="math inline">\(\overline{\boldsymbol{\epsilon}}_{\cdot tk} \sim \mathcal{N}(\boldsymbol{0}, \Sigma_{tk}/n_{tk})\)</span>, <span class="math inline">\(S_{tk}\)</span> is the full-rank covariance matrix whose diagonal entries are the observed <span class="math inline">\(\boldsymbol{s}_{tk}\)</span>, and <span class="math inline">\(\mathcal{W}_\nu(\Sigma)\)</span> is the Wishart distribution with <span class="math inline">\(\nu\)</span> degrees of freedom and a <span class="math inline">\(J\times J\)</span> scale matrix <span class="math inline">\(\Sigma\)</span> whose density function is</p>
 <p><span class="math display">\[
-f(X\mid \nu,\Sigma) = \dfrac{1}{2^{J\nu}|\Sigma|^{\nu/2}\Gamma_p(\nu/2)}|X|^{(\nu-J-1)/2}\exp\left(-\dfrac{1}{2}\mathrm{tr}(\Sigma^{-1}X) \right)I(X\in \mathcal{S}_{++}^J),
+f(X\mid \nu,\Sigma) = \dfrac{1}{2^{J\nu}|\Sigma|^{\nu/2}\Gamma_J(\nu/2)}|X|^{(\nu-J-1)/2}\exp\left(-\dfrac{1}{2}\mathrm{tr}(\Sigma^{-1}X) \right)I(X\in \mathcal{S}_{++}^J),
 \]</span></p>
 <p>where <span class="math inline">\(\Gamma_p\)</span> is the multivariate gamma function defined by</p>
 <p><span class="math display">\[

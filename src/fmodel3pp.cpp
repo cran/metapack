@@ -13,7 +13,6 @@
 #include "loglik_POCov.h"
 #include "nelmin.h"
 #include "ramcmc.h"
-#include "ListBuilder.h"
 // [[Rcpp::depends(RcppArmadillo,RcppProgress)]]
 
 // [[Rcpp::export]]
@@ -130,6 +129,7 @@ Rcpp::List fmodel3pp(const arma::mat& Outcome,
 			if (Progress::check_abort()) {
 				return Rcpp::List::create(Rcpp::Named("error") = "user interrupt aborted");
 			}
+			++icount_mh;
 			// Update theta
 			mat Sig_theta(nt, nt, fill::zeros);
 			Sig_theta.diag().fill(1.0 / c0);
@@ -923,18 +923,19 @@ Rcpp::List fmodel3pp(const arma::mat& Outcome,
 
 
 
-	return ListBuilder()
-		.add("resid", resid_save)
-		.add("theta", theta_save)
-		.add("Omega", Omega_save)
-		.add("Sigma", Sig_save)
-		.add("delta", delta_save)
-		.add("Rho", Rho_save)
-		.add("R", Rtk_save)
-	    .add("pR", pRtk_save)
-		.add("delta_acceptance", delta_rates / static_cast<double>(ndiscard + nskip*nkeep))
-		.add("vRho_acceptance", vRho_rates / static_cast<double>(ndiscard + nskip*nkeep))
-	    .add("vR_acceptance", vR_rates / static_cast<double>(ndiscard + nskip*nkeep));
+	return Rcpp::List::create(
+			Rcpp::Named("resid") = resid_save,
+			Rcpp::Named("theta") = theta_save,
+			Rcpp::Named("Omega") = Omega_save,
+			Rcpp::Named("Sigma") = Sig_save,
+			Rcpp::Named("delta") = delta_save,
+			Rcpp::Named("Rho") = Rho_save,
+			Rcpp::Named("R") = Rtk_save,
+		    Rcpp::Named("pR") = pRtk_save,
+			Rcpp::Named("delta_acceptance") = delta_rates / static_cast<double>(ndiscard + nskip*nkeep),
+			Rcpp::Named("vRho_acceptance") = vRho_rates / static_cast<double>(ndiscard + nskip*nkeep),
+		    Rcpp::Named("vR_acceptance") = vR_rates / static_cast<double>(ndiscard + nskip*nkeep)
+		);
 }
 
 
