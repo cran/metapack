@@ -2,23 +2,23 @@
 % Please edit documentation in R/BayesNMR.R
 \name{bayes.nmr}
 \alias{bayes.nmr}
-\title{Fit Bayesian Network Meta-Regression Hierarchical Models Using Heavy-Tailed Multivariate Random Effects with Covariate-Dependent Variances}
+\title{Fit Bayesian Network Meta-Regression Models}
 \usage{
 bayes.nmr(
   Outcome,
   SD,
   XCovariate,
   ZCovariate,
-  Trial,
   Treat,
+  Trial,
   Npt,
   prior = list(),
   mcmc = list(),
-  scale_x = FALSE,
   control = list(),
   init = list(),
   Treat_order = NULL,
   Trial_order = NULL,
+  scale_x = FALSE,
   verbose = FALSE
 )
 }
@@ -31,17 +31,15 @@ bayes.nmr(
 
 \item{ZCovariate}{the aggregate covariates associated with the variance of the random effects.}
 
-\item{Trial}{the study/trial identifiers. The elements within will be coerced to consecutive integers.}
-
 \item{Treat}{the treatment identifiers for trial arm. This is equivalent to the arm labels in each study. The elements within will be coerced to consecutive integers}
+
+\item{Trial}{the study/trial identifiers. The elements within will be coerced to consecutive integers.}
 
 \item{Npt}{the number of observations/participants for a unique \verb{(t,k)}, or each arm of every trial.}
 
 \item{prior}{(Optional) a list of hyperparameters. The hyperparameters include \code{df}, \code{c01}, \code{c02}, \code{a4}, \code{b4}, \code{a5}, and \code{b5}. \code{df} indicates the degrees of freedom whose value is 20. The hyperparameters \verb{a*} and \verb{b*} will take effect only if \code{sample_df=TRUE}. See \code{control}.}
 
 \item{mcmc}{(Optional) a list of MCMC specification. \code{ndiscard} is the number of burn-in iterations. \code{nskip} configures the thinning of the MCMC. For instance, if \code{nskip=5}, \code{bayes.nmr} will save the posterior sample every 5 iterations. \code{nkeep} is the size of the posterior sample. The total number of iterations will be \code{ndiscard + nskip * nkeep}.}
-
-\item{scale_x}{(Optional) a logical variable indicating whether \code{XCovariate} should be scaled/standardized. The effect of setting this to \code{TRUE} is not limited to merely standardizing \code{XCovariate}. The following generic functions will scale the posterior sample of \code{theta} back to its original unit: \code{plot}, \code{fitted}, \code{summary}, and \code{print}. That is \code{theta[j] <- theta[j] / sd(XCovariate[,j])}.}
 
 \item{control}{(Optional) a list of parameters for \href{https://en.wikipedia.org/wiki/Metropolis-Hastings_algorithm}{the Metropolis-Hastings algorithm}. \code{lambda}, \code{phi}, and \code{Rho} are sampled through the localized Metropolis algorithm. \verb{*_stepsize} with the asterisk replaced with one of the names above specifies the stepsize for determining the sample evaluation points in the localized Metropolis algorithm. \code{sample_Rho} can be set to \code{FALSE} to suppress the sampling of \code{Rho}. When \code{sample_Rho} is \code{FALSE}, \code{Rho} will be fixed using the value given by the \code{init} argument, which defaults to an equicorrelation matrix of \eqn{0.5\boldsymbol{I}+0.5\boldsymbol{1}\boldsymbol{1}^\prime}{0.5*I + 0.5*11'} where \eqn{\boldsymbol{1}}{1} is the vector of ones. When \code{sample_df} is \code{TRUE}, \code{df} will be sampled.}
 
@@ -50,6 +48,8 @@ bayes.nmr(
 \item{Treat_order}{(Optional) a vector of unique treatments to be used for renumbering the \code{Treat} vector. The first element will be assigned treatment zero, potentially indicating placebo. If not provided, the numbering will default to an alphabetical/numerical order.}
 
 \item{Trial_order}{(Optional) a vector unique trials. The first element will be assigned trial zero. If not provided, the numbering will default to an alphabetical/numerical order.}
+
+\item{scale_x}{(Optional) a logical variable indicating whether \code{XCovariate} should be scaled/standardized. The effect of setting this to \code{TRUE} is not limited to merely standardizing \code{XCovariate}. The following generic functions will scale the posterior sample of \code{theta} back to its original unit: \code{plot}, \code{fitted}, \code{summary}, and \code{print}. That is \code{theta[j] <- theta[j] / sd(XCovariate[,j])}.}
 
 \item{verbose}{(Optional) a logical value indicating whether to print the progress bar during the MCMC sampling.}
 }
@@ -78,7 +78,7 @@ An object of class \code{bayes.nmr} is a list containing the following component
 }
 }
 \description{
-This is a function the fits the model introduced in \emph{Bayesian Network Meta-Regression Models Using Heavy-Tailed Multivariate Random Effects with Covariate-Dependent Variances (under revision)}. The first seven arguments are required except \code{ZCovariate}. If not provided, \code{ZCovariate} will be assigned a vector of ones, \code{rep(1, length(Outcome))}. \code{ZCovariate} is the centerpiece of the modeling of variances and the heavy-tailed random effects distribution.
+This is a function the fits the model introduced in \emph{Bayesian Network Meta-Regression Models Using Heavy-Tailed Multivariate Random Effects with Covariate-Dependent Variances}. The first seven arguments are required except \code{ZCovariate}. If not provided, \code{ZCovariate} will be assigned a vector of ones, \code{rep(1, length(Outcome))}. \code{ZCovariate} is the centerpiece of the modeling of variances and the heavy-tailed random effects distribution.
 }
 \examples{
 library(metapack)
@@ -92,7 +92,7 @@ XCovariate <- scale(XCovariate, center = TRUE, scale = FALSE)
 ZCovariate <- matrix(0, ns, nz)
 for (j in 1:length(groupInfo)) {
     for (i in 1:ns) {
-        if (TNM$Treat[i] \%in\% groupInfo[[j]]) {
+        if (TNM$treat[i] \%in\% groupInfo[[j]]) {
             ZCovariate[i, j] <- 1
         }
     }
@@ -104,8 +104,8 @@ theta_init <- c(0.05113, -1.38866, 1.09817, -0.85855, -1.12056, -1.14133,
              -45.07127, -28.27232, -44.14054, -28.13203, -19.19989,
              -47.21824, -51.31234, -48.46266, -47.71443)
 set.seed(2797542)
-fit <- bayes.nmr(TNM$ptg, TNM$sdtg, XCovariate, ZCovariate, TNM$Trial,
-    TNM$Treat, TNM$Npt, prior = list(c01 = 1.0e05, c02 = 4, df = 3),
+fit <- bayes.nmr(TNM$ptg, TNM$sdtg, XCovariate, ZCovariate, TNM$treat,
+    TNM$trial, TNM$n, prior = list(c01 = 1.0e05, c02 = 4, df = 3),
     mcmc = list(ndiscard = 1, nskip = 1, nkeep = 1),
     init = list(theta = theta_init),
     Treat_order = c("PBO", "S", "A", "L", "R", "P", "E", "SE",
@@ -115,7 +115,10 @@ fit <- bayes.nmr(TNM$ptg, TNM$sdtg, XCovariate, ZCovariate, TNM$Trial,
 \references{
 Li, H., Chen, M. H., Ibrahim, J. G., Kim, S., Shah, A. K., Lin, J., & Tershakovec, A. M. (2019). Bayesian inference for network meta-regression using multivariate random effects with applications to cholesterol lowering drugs. \emph{Biostatistics}, \strong{20(3)}, 499-516.
 
-Li, H., Lim, D., Chen, M. H., Ibrahim, J. G., Kim, S., Shah, A. K., Lin, J. (2021). Bayesian network meta-regression hierarchical models using heavy-tailed multivariate random effects with covariate-dependent variances. Submitted.
+Li, H., Lim, D., Chen, M. H., Ibrahim, J. G., Kim, S., Shah, A. K., & Lin, J. (2021). Bayesian network meta-regression hierarchical models using heavy-tailed multivariate random effects with covariate-dependent variances. \emph{Statistics in Medicine}.
+}
+\seealso{
+\code{\link{bmeta_analyze}} for using the \code{\link[Formula]{Formula}} interface
 }
 \author{
 Daeyoung Lim, \email{daeyoung.lim@uconn.edu}

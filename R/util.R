@@ -1,29 +1,28 @@
-transform.data <- function(df){
-  with(df, {
-    #relabel Study names into to a numeric sequence (1:nstudy)
-    na <- rle(Study)$lengths
-    Study.order <- unique(Study)
-    names(Study.order) <- 1:length(Study.order)
-    Study <- rep(1:length(unique(Study)), times = na)
-
-    #relabel the treatment according to treatment order specified
-    if(is.null(Treat.order)){
-      Treat.order <- sort(unique(Treat))
+check.numeric <- function(v) {
+    if (!inherits(v, c("character", "factor"))) {
+        if (inherits(v, c("numeric", "integer", "logical"))) {
+            return(rep(TRUE, length(v)))
+        }
     }
-    Treat <- relabel.vec(Treat, Treat.order)
-    names(Treat.order) <- 1:length(Treat.order)
 
-    data <- if(response == "normal"){
-      cbind(Outcomes, SE, Study, Treat)
+    if (inherits(v, "factor")) {
+        v <- as.character(v)
+    }
+
+    regexp_pattern <- "(^(-|\\+)?((\\.?\\d+)|(\\d+\\.\\d+)|(\\d+\\.?))$)|(^(-|\\+)?((\\.?\\d+)|(\\d+\\.\\d+)|(\\d+\\.?))e(-|\\+)?(\\d+)$)"
+    grepl(regexp_pattern, v)
+}
+
+unfactor <- function(v) {
+    if (inherits(v, "factor")) {
+        x <- as.character(v)
+        if (all(check.numeric(x))) {
+            x <- as.numeric(x)
+        }
     } else {
-      cbind(Outcomes, N, Study, Treat)
+        x <- as.character(v)
     }
-
-    ordering <- order(Study, Treat)
-    data <- data[ordering,]
-
-    list(data = data, Treat.order = Treat.order, Study.order = Study.order)
-  })
+    x
 }
 
 relabel.vec <- function(x, order)
@@ -39,8 +38,8 @@ vhpd <- function(x, level = 0.95) {
     cl <- level
     gap <- max(1, min(n - 1, round(n * level))) / n
     if (level > gap) {
-      warning("The desired level cannot be reached with the provided posterior sample size.\n The level should be smaller than ", gap, ". ", "Forcing the HPD level to ", gap-1.0e-4, "\n")
-      cl <- gap-1.0e-4
+        warning("The desired level cannot be reached with the provided posterior sample size.\n The level should be smaller than ", gap, ". ", "Forcing the HPD level to ", gap-1.0e-4, "\n")
+        cl <- gap-1.0e-4
     }
     alpha <- 1 - cl
     out <- .Call(`_metapack_vhpd`, as.vector(x), as.double(alpha))
@@ -53,8 +52,8 @@ mhpd <- function(x, level = 0.95) {
     gap <- max(1, min(n - 1, round(n * level))) / n
     cl <- level
     if (level > gap) {
-      warning("The desired level cannot be reached with the provided posterior sample size.\n The level should be smaller than ", gap, ". ", "Forcing the HPD level to ", gap-1.0e-4, "\n")
-      cl <- gap-1.0e-4
+        warning("The desired level cannot be reached with the provided posterior sample size.\n The level should be smaller than ", gap, ". ", "Forcing the HPD level to ", gap-1.0e-4, "\n")
+        cl <- gap-1.0e-4
     }
     alpha <- 1 - cl
     out <- .Call(`_metapack_mhpd`, as.matrix(x), as.double(alpha))
@@ -69,28 +68,33 @@ hpdarray <- function(A, level = 0.95) {
     gap <- max(1, min(n - 1, round(n * level))) / n
     cl <- level
     if (level > gap) {
-      warning("The desired level cannot be reached with the provided posterior sample size.\n The level should be smaller than ", gap, ". ", "Forcing the HPD level to ", gap-1.0e-4, "\n")
-      cl <- gap-1.0e-4
+        warning("The desired level cannot be reached with the provided posterior sample size.\n The level should be smaller than ", gap, ". ", "Forcing the HPD level to ", gap-1.0e-4, "\n")
+        cl <- gap-1.0e-4
     }
     alpha <- 1 - cl
-  out <- array(0, dim = c(nR, nC, 2))
-  dimnames(out)[[3]] <- c("lower", "upper")
-  for (iC in 1:nC) {
+    out <- array(0, dim = c(nR, nC, 2))
+    dimnames(out)[[3]] <- c("lower", "upper")
+    for (iC in 1:nC) {
         hpd_ic <- .Call(`_metapack_mhpd`, as.matrix(A[,iC,]), as.double(alpha))
-    out[,iC,1] <- hpd_ic[,1]
-    out[,iC,2] <- hpd_ic[,2]
-  }
-  attr(out, "Empirical level") <- gap 
-  return(out)
+        out[,iC,1] <- hpd_ic[,1]
+        out[,iC,2] <- hpd_ic[,2]
+    }
+    attr(out, "Empirical level") <- gap 
+    return(out)
 }
 
 ciarray <- function(A, level = 0.95) {
-  nR <- nrow(A)
-  nC <- ncol(A)
-  out <- array(0, dim = c(nR, nC, 2))
-  dimnames(out)[[3]] <- c("lower", "upper")
-  sig.level <- 1 - level
-  out[,,1] <- apply(A, c(1,2), function(xx) quantile(xx, prob = sig.level / 2))
-  out[,,2] <- apply(A, c(1,2), function(xx) quantile(xx, prob = 1 - sig.level / 2))
-  return(out)
+    nR <- nrow(A)
+    nC <- ncol(A)
+    out <- array(0, dim = c(nR, nC, 2))
+    dimnames(out)[[3]] <- c("lower", "upper")
+    sig.level <- 1 - level
+    out[,,1] <- apply(A, c(1,2), function(xx) quantile(xx, prob = sig.level / 2))
+    out[,,2] <- apply(A, c(1,2), function(xx) quantile(xx, prob = 1 - sig.level / 2))
+    return(out)
 }
+
+#' helper function encoding trial sample sizes in formulas
+#' @param x the name of the variable containing trial sample sizes
+#' @export
+ns <- function(x) x

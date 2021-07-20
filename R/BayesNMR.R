@@ -1,21 +1,21 @@
-#' Fit Bayesian Network Meta-Regression Hierarchical Models Using Heavy-Tailed Multivariate Random Effects with Covariate-Dependent Variances
+#' Fit Bayesian Network Meta-Regression Models
 #'
-#' This is a function the fits the model introduced in *Bayesian Network Meta-Regression Models Using Heavy-Tailed Multivariate Random Effects with Covariate-Dependent Variances (under revision)*. The first seven arguments are required except `ZCovariate`. If not provided, `ZCovariate` will be assigned a vector of ones, `rep(1, length(Outcome))`. `ZCovariate` is the centerpiece of the modeling of variances and the heavy-tailed random effects distribution. 
+#' This is a function the fits the model introduced in *Bayesian Network Meta-Regression Models Using Heavy-Tailed Multivariate Random Effects with Covariate-Dependent Variances*. The first seven arguments are required except `ZCovariate`. If not provided, `ZCovariate` will be assigned a vector of ones, `rep(1, length(Outcome))`. `ZCovariate` is the centerpiece of the modeling of variances and the heavy-tailed random effects distribution. 
 #' @author Daeyoung Lim, \email{daeyoung.lim@uconn.edu}
 #' @param Outcome the aggregate mean of the responses for each arm of every study.
 #' @param SD the standard deviation of the responses for each arm of every study.
 #' @param XCovariate the aggregate covariates for the fixed effects.
 #' @param ZCovariate the aggregate covariates associated with the variance of the random effects.
-#' @param Trial the study/trial identifiers. The elements within will be coerced to consecutive integers.
 #' @param Treat the treatment identifiers for trial arm. This is equivalent to the arm labels in each study. The elements within will be coerced to consecutive integers
+#' @param Trial the study/trial identifiers. The elements within will be coerced to consecutive integers.
 #' @param Npt the number of observations/participants for a unique `(t,k)`, or each arm of every trial.
 #' @param prior (Optional) a list of hyperparameters. The hyperparameters include `df`, `c01`, `c02`, `a4`, `b4`, `a5`, and `b5`. `df` indicates the degrees of freedom whose value is 20. The hyperparameters `a*` and `b*` will take effect only if `sample_df=TRUE`. See `control`.
 #' @param mcmc (Optional) a list of MCMC specification. `ndiscard` is the number of burn-in iterations. `nskip` configures the thinning of the MCMC. For instance, if `nskip=5`, `bayes.nmr` will save the posterior sample every 5 iterations. `nkeep` is the size of the posterior sample. The total number of iterations will be `ndiscard + nskip * nkeep`.
 #' @param control (Optional) a list of parameters for [the Metropolis-Hastings algorithm](https://en.wikipedia.org/wiki/Metropolis-Hastings_algorithm). `lambda`, `phi`, and `Rho` are sampled through the localized Metropolis algorithm. `*_stepsize` with the asterisk replaced with one of the names above specifies the stepsize for determining the sample evaluation points in the localized Metropolis algorithm. `sample_Rho` can be set to `FALSE` to suppress the sampling of `Rho`. When `sample_Rho` is `FALSE`, `Rho` will be fixed using the value given by the `init` argument, which defaults to an equicorrelation matrix of \eqn{0.5\boldsymbol{I}+0.5\boldsymbol{1}\boldsymbol{1}^\prime}{0.5*I + 0.5*11'} where \eqn{\boldsymbol{1}}{1} is the vector of ones. When `sample_df` is `TRUE`, `df` will be sampled.
-#' @param scale_x (Optional) a logical variable indicating whether `XCovariate` should be scaled/standardized. The effect of setting this to `TRUE` is not limited to merely standardizing `XCovariate`. The following generic functions will scale the posterior sample of `theta` back to its original unit: `plot`, `fitted`, `summary`, and `print`. That is `theta[j] <- theta[j] / sd(XCovariate[,j])`. 
 #' @param init (Optional) a list of initial values for the parameters to be sampled: `theta`, `phi`, `sig2`, and `Rho`.
 #' @param Treat_order (Optional) a vector of unique treatments to be used for renumbering the `Treat` vector. The first element will be assigned treatment zero, potentially indicating placebo. If not provided, the numbering will default to an alphabetical/numerical order.
 #' @param Trial_order (Optional) a vector unique trials. The first element will be assigned trial zero. If not provided, the numbering will default to an alphabetical/numerical order.
+#' @param scale_x (Optional) a logical variable indicating whether `XCovariate` should be scaled/standardized. The effect of setting this to `TRUE` is not limited to merely standardizing `XCovariate`. The following generic functions will scale the posterior sample of `theta` back to its original unit: `plot`, `fitted`, `summary`, and `print`. That is `theta[j] <- theta[j] / sd(XCovariate[,j])`. 
 #' @param verbose (Optional) a logical value indicating whether to print the progress bar during the MCMC sampling.
 #' @return `bayes.nmr` returns an object of class `"bayesnmr"`. The functions `summary` or `print` are used to obtain and print a summary of the results. The generic accessor function `fitted` extracts the posterior mean, posterior standard deviation, and the interval estimates of the value returned by `bayes.nmr`.
 #' 
@@ -42,7 +42,7 @@
 #' @references 
 #' Li, H., Chen, M. H., Ibrahim, J. G., Kim, S., Shah, A. K., Lin, J., & Tershakovec, A. M. (2019). Bayesian inference for network meta-regression using multivariate random effects with applications to cholesterol lowering drugs. *Biostatistics*, **20(3)**, 499-516.
 #' 
-#' Li, H., Lim, D., Chen, M. H., Ibrahim, J. G., Kim, S., Shah, A. K., Lin, J. (2021). Bayesian network meta-regression hierarchical models using heavy-tailed multivariate random effects with covariate-dependent variances. Submitted.
+#' Li, H., Lim, D., Chen, M. H., Ibrahim, J. G., Kim, S., Shah, A. K., & Lin, J. (2021). Bayesian network meta-regression hierarchical models using heavy-tailed multivariate random effects with covariate-dependent variances. *Statistics in Medicine*.
 #' 
 #' @examples
 #' library(metapack)
@@ -56,7 +56,7 @@
 #' ZCovariate <- matrix(0, ns, nz)
 #' for (j in 1:length(groupInfo)) {
 #'     for (i in 1:ns) {
-#'         if (TNM$Treat[i] %in% groupInfo[[j]]) {
+#'         if (TNM$treat[i] %in% groupInfo[[j]]) {
 #'             ZCovariate[i, j] <- 1
 #'         }
 #'     }
@@ -68,8 +68,8 @@
 #'              -45.07127, -28.27232, -44.14054, -28.13203, -19.19989,
 #'              -47.21824, -51.31234, -48.46266, -47.71443)
 #' set.seed(2797542)
-#' fit <- bayes.nmr(TNM$ptg, TNM$sdtg, XCovariate, ZCovariate, TNM$Trial,
-#'     TNM$Treat, TNM$Npt, prior = list(c01 = 1.0e05, c02 = 4, df = 3),
+#' fit <- bayes.nmr(TNM$ptg, TNM$sdtg, XCovariate, ZCovariate, TNM$treat,
+#'     TNM$trial, TNM$n, prior = list(c01 = 1.0e05, c02 = 4, df = 3),
 #'     mcmc = list(ndiscard = 1, nskip = 1, nkeep = 1),
 #'     init = list(theta = theta_init),
 #'     Treat_order = c("PBO", "S", "A", "L", "R", "P", "E", "SE",
@@ -77,25 +77,26 @@
 #'     scale_x = TRUE, verbose = FALSE)
 #' @importFrom stats model.matrix
 #' @importFrom methods is
+#' @seealso \code{\link{bmeta_analyze}} for using the \code{\link[Formula]{Formula}} interface
 #' @md
 #' @export
-bayes.nmr <- function(Outcome, SD, XCovariate, ZCovariate, Trial, Treat, Npt, prior = list(), mcmc = list(), scale_x = FALSE, control = list(), init = list(), Treat_order = NULL, Trial_order = NULL, verbose = FALSE) {
+bayes.nmr <- function(Outcome, SD, XCovariate, ZCovariate, Treat, Trial, Npt, prior = list(), mcmc = list(), control = list(), init = list(), Treat_order = NULL, Trial_order = NULL, scale_x = FALSE, verbose = FALSE) {
   if (!is(Outcome, "vector")) {
     tmp <- try(Outcome <- as.vector(Outcome))
     if (is(tmp, "try-error")) {
-      stop("Outcome must be a vector or able to be coerced to a vector")
+      stop(paste(sQuote("Outcome"), "must be a vector or able to be coerced to a vector"))
     }
   }
   if (!is(SD, "vector")) {
     tmp <- try(SD <- as.vector(SD))
     if (is(tmp, "try-error")) {
-      stop("SD must be a vector or able to be coerced to a vector")
+      stop(paste(sQuote("SD"), "must be a vector or able to be coerced to a vector"))
     }
   }
   if (!is(XCovariate, "matrix")) {
     tmp <- try(XCovariate <- model.matrix(~ 0 + ., data = XCovariate), silent = TRUE)
     if (is(tmp, "try-error")) {
-      stop("XCovariate must be a matrix or able to be coerced to a matrix")
+      stop(paste(sQuote("XCovariate"), "must be a matrix or able to be coerced to a matrix"))
     }
   }
   if (missing(ZCovariate)) {
@@ -104,38 +105,39 @@ bayes.nmr <- function(Outcome, SD, XCovariate, ZCovariate, Trial, Treat, Npt, pr
     if (!is(ZCovariate, "matrix")) {
       tmp <- try(ZCovariate <- model.matrix(~ 0 + ., data = ZCovariate), silent = TRUE)
       if (is(tmp, "try-error")) {
-        stop("ZCovariate must be a matrix or able to be coerced to a matrix")
+        stop(paste(sQuote("ZCovariate"), "must be a matrix or able to be coerced to a matrix"))
       }
     }
   }
   if (!is(Treat, "vector")) {
     tmp <- try(Treat <- as.vector(Treat))
     if (is(tmp, "try-error")) {
-      stop("Treat must be a vector or able to be coerced to a vector")
+      stop(paste(sQuote("Treat"), "must be a vector or able to be coerced to a vector"))
     }
   }
   if (!is(Trial, "vector")) {
     tmp <- try(Trial <- as.vector(Trial))
     if (is(tmp, "try-error")) {
-      stop("Trial must be a vector or able to be coerced to a vector")
+      stop(paste(sQuote("Trial"), "must be a vector or able to be coerced to a vector"))
     }
   }
   if (!is(Npt, "numeric")) {
     tmp <- try(Npt <- as.numeric(Npt))
     if (is(tmp, "try-error")) {
-      stop("Npt must be numeric or able to be coerced to numeric")
+      stop(paste(sQuote("Npt"), "must be numeric or able to be coerced to numeric"))
     }
   }
   if (any(is.na(Outcome)) | any(is.na(XCovariate)) | any(is.na(ZCovariate)) | any(is.na(Treat)) | any(is.na(Trial)) | any(is.na(Npt))) {
     stop("Missing data (NA) detected. Handle missing data (e.g., delete missings, delete variables, imputation) before passing it as an argument")
   }
 
+
   mcvals <- list(ndiscard = 5000L, nskip = 1L, nkeep = 20000L)
   mcvals[names(mcmc)] <- mcmc
   ndiscard <- mcvals$ndiscard
   nskip <- mcvals$nskip
   if (nskip < 1) {
-    stop("The thinning cannot be smaller than 1.")
+    stop(paste0(sQuote("nskip"), "can't be smaller than 1"))
   }
   nkeep <- mcvals$nkeep
 
@@ -202,7 +204,19 @@ bayes.nmr <- function(Outcome, SD, XCovariate, ZCovariate, Trial, Treat, Npt, pr
   init_final[names(init)] <- init
   Rho_init <- init_final$Rho
   if (any(eigen(Rho_init, symmetric = TRUE, only.values = TRUE)$values <= 0)) {
-    stop("The initial value for Omega is not positive definite")
+    stop(paste("The initial value for", sQuote("Omega"), "is not positive definite"))
+  }
+  if (length(init_final$theta) != nt) {
+    stop(paste("theta initialized with length", sQuote(length(init_final$theta)), "but", sQuote(nt), "wanted"))
+  }
+  if (length(init_final$phi) != nz) {
+    stop(paste("phi initialized with length", sQuote(length(init_final$phi)), "but", sQuote(nz), "wanted"))
+  }
+  if (length(init_final$sig2) != ns) {
+    stop(paste("sig2 initialized with length", sQuote(length(init_final$sig2)), "but", sQuote(ns), "wanted"))
+  }
+  if (dim(init_final$Rho)[1] != nT || dim(init_final$Rho)[2] != nT) {
+    stop(paste("Rho initialized with dimensions", sQuote(dim(init_final$Rho)), "but", sQuote(nT), "wanted"))
   }
 
   ctrl <- list(
@@ -220,7 +234,7 @@ bayes.nmr <- function(Outcome, SD, XCovariate, ZCovariate, Trial, Treat, Npt, pr
   sample_df <- ctrl$sample_df
 
   if (is.infinite(df) && sample_df) {
-    stop("The degrees of freedom cannot be sampled for a normal random-effects model")
+    stop(paste(sQuote("df"), "can't be sampled for a normal random-effects model"))
   }
 
 

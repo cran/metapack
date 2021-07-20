@@ -2,7 +2,7 @@
 % Please edit documentation in R/bayes.parobs.R
 \name{bayes.parobs}
 \alias{bayes.parobs}
-\title{Fit Bayesian Inference for Multivariate Meta-Regression With a Partially Observed Within-Study Sample Covariance Matrix}
+\title{Fit Bayesian Inference for Meta-Regression}
 \usage{
 bayes.parobs(
   Outcome,
@@ -77,7 +77,7 @@ An object of class \code{bayes.nmr} is a list containing the following component
 \item \code{Outcome} - the aggregate response used in the function call.
 \item \code{SD} - the standard deviation used in the function call.
 \item \code{Npt} - the number of participants for \verb{(t,k)} used in the function call.
-\item \code{XCovariate} - the aggregate design matrix for fixed effects used in the function call. Depending on \code{scale_x}, this may differ from #' the matrix provided at function call.
+\item \code{XCovariate} - the aggregate design matrix for fixed effects used in the function call. Depending on \code{scale_x}, this may differ from the matrix provided at function call.
 \item \code{WCovariate} - the aggregate design matrix for random effects.
 \item \code{Treat} - the \emph{renumbered} treatment indicators. Depending on \code{Treat_order}, it may differ from the vector provided at function call.
 \item \code{Trial} - the \emph{renumbered} trial indicators. Depending on \code{Trial_order}, it may differ from the vector provided at function call.
@@ -110,12 +110,12 @@ library(metapack)
 data("cholesterol")
 Outcome <- model.matrix(~ 0 + pldlc + phdlc + ptg, data = cholesterol)
 SD <- model.matrix(~ 0 + sdldl + sdhdl + sdtg, data = cholesterol)
-Trial <- cholesterol$Trial
-Treat <- cholesterol$trt
-Npt <- cholesterol$Npt
+Trial <- cholesterol$trial
+Treat <- cholesterol$treat
+Npt <- cholesterol$n
 XCovariate <- model.matrix(~ 0 + bldlc + bhdlc + btg + age + durat +
  white + male + dm, data = cholesterol)
-WCovariate <- model.matrix(~ trt, data = cholesterol)
+WCovariate <- model.matrix(~ treat, data = cholesterol)
 
 fmodel <- 1
 set.seed(2797542)
@@ -125,6 +125,9 @@ fit <- bayes.parobs(Outcome, SD, XCovariate, WCovariate, Treat, Trial,
 }
 \references{
 Yao, H., Kim, S., Chen, M. H., Ibrahim, J. G., Shah, A. K., & Lin, J. (2015). Bayesian inference for multivariate meta-regression with a partially observed within-study sample covariance matrix. \emph{Journal of the American Statistical Association}, \strong{110(510)}, 528-544.
+}
+\seealso{
+\code{\link{bmeta_analyze}} for using the \code{\link[Formula]{Formula}} interface
 }
 \author{
 Daeyoung Lim, \email{daeyoung.lim@uconn.edu}
