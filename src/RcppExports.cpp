@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // BayesNMR
 Rcpp::List BayesNMR(const arma::vec& y, const arma::vec& sd, const arma::mat& x, const arma::mat& z, const arma::uvec& ids, const arma::uvec& iarm, const arma::vec& npt, const double& nu, const double& c01_inv, const double& c02_inv, const double& a4, const double& b4, const double& a5, const double& b5, const int& K, const int& nT, const int& ndiscard, const int& nskip, const int& nkeep, const bool verbose, const arma::vec& theta_init, const arma::vec& phi_init, const arma::vec& sig2_init, const arma::mat& Rho_init, const double& lambda_stepsize, const double& phi_stepsize, const double& Rho_stepsize, const bool& sample_Rho, const bool& sample_df);
 RcppExport SEXP _metapack_BayesNMR(SEXP ySEXP, SEXP sdSEXP, SEXP xSEXP, SEXP zSEXP, SEXP idsSEXP, SEXP iarmSEXP, SEXP nptSEXP, SEXP nuSEXP, SEXP c01_invSEXP, SEXP c02_invSEXP, SEXP a4SEXP, SEXP b4SEXP, SEXP a5SEXP, SEXP b5SEXP, SEXP KSEXP, SEXP nTSEXP, SEXP ndiscardSEXP, SEXP nskipSEXP, SEXP nkeepSEXP, SEXP verboseSEXP, SEXP theta_initSEXP, SEXP phi_initSEXP, SEXP sig2_initSEXP, SEXP Rho_initSEXP, SEXP lambda_stepsizeSEXP, SEXP phi_stepsizeSEXP, SEXP Rho_stepsizeSEXP, SEXP sample_RhoSEXP, SEXP sample_dfSEXP) {
@@ -503,28 +508,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// pRho_to_Rho
-arma::mat pRho_to_Rho(arma::mat& pRho);
-RcppExport SEXP _metapack_pRho_to_Rho(SEXP pRhoSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type pRho(pRhoSEXP);
-    rcpp_result_gen = Rcpp::wrap(pRho_to_Rho(pRho));
-    return rcpp_result_gen;
-END_RCPP
-}
-// Rho_to_pRho
-arma::mat Rho_to_pRho(arma::mat& Rho);
-RcppExport SEXP _metapack_Rho_to_pRho(SEXP RhoSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type Rho(RhoSEXP);
-    rcpp_result_gen = Rcpp::wrap(Rho_to_pRho(Rho));
-    return rcpp_result_gen;
-END_RCPP
-}
 // calc_modelfit_pearson
 arma::vec calc_modelfit_pearson(const arma::mat& resid, const arma::vec& npt, const arma::mat& sig2s, const int& nkeep, const bool& verbose);
 RcppExport SEXP _metapack_calc_modelfit_pearson(SEXP residSEXP, SEXP nptSEXP, SEXP sig2sSEXP, SEXP nkeepSEXP, SEXP verboseSEXP) {
@@ -588,8 +571,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_metapack_pearson_parcov", (DL_FUNC) &_metapack_pearson_parcov, 6},
     {"_metapack_vhpd", (DL_FUNC) &_metapack_vhpd, 2},
     {"_metapack_mhpd", (DL_FUNC) &_metapack_mhpd, 2},
-    {"_metapack_pRho_to_Rho", (DL_FUNC) &_metapack_pRho_to_Rho, 1},
-    {"_metapack_Rho_to_pRho", (DL_FUNC) &_metapack_Rho_to_pRho, 1},
     {"_metapack_calc_modelfit_pearson", (DL_FUNC) &_metapack_calc_modelfit_pearson, 5},
     {"_metapack_calc_modelfit_lpml", (DL_FUNC) &_metapack_calc_modelfit_lpml, 19},
     {NULL, NULL, 0}

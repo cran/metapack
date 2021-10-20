@@ -68,8 +68,8 @@ Rcpp::List fmodel4p(const arma::mat& Outcome,
 	mat gamR = gamR_init;
 	mat Omega = Omega_init;
 	mat Omegainv = Omega.i();
-	mat Sig_lt(N, (J*(J+1))/2, fill::zeros); // store the diagonal-incluseive lower triangular (lt) elements of Sig
-	mat Siginv_lt(N, (J*(J+1))/2, fill::zeros); // store the diagonal-incluseive lower triangular (lt) elements of Siginv
+	mat Sig_lt(N, (J*(J+1))/2, fill::zeros); // store the diagonal-inclusive lower triangular (lt) elements of Sig
+	mat Siginv_lt(N, (J*(J+1))/2, fill::zeros); // store the diagonal-inclusive lower triangular (lt) elements of Siginv
 	mat vRtk(N, J * (J - 1) / 2, fill::zeros); // store the off-diagonal lower triangular elements of normal variates for Rtk
 	vRtk.fill(0.5);
 	// vec delta(J, fill::ones);
@@ -171,8 +171,7 @@ Rcpp::List fmodel4p(const arma::mat& Outcome,
 			}
 			Sig_theta = 0.5 * (Sig_theta + Sig_theta.t());
 			mat Sig_theta_chol = arma::chol(Sig_theta);
-			vec ttmp(nt);
-			std::generate(ttmp.begin(), ttmp.end(), ::norm_rand);
+			vec ttmp(nt, fill::randn);
 			theta = arma::solve(arma::trimatu(Sig_theta_chol), arma::solve(arma::trimatl(Sig_theta_chol.t()), mu_theta) + ttmp);
 
 			for (int i = 0; i < N; ++i) {
@@ -223,8 +222,7 @@ Rcpp::List fmodel4p(const arma::mat& Outcome,
 				}
 				Siggam = 0.5 * (Siggam + Siggam.t());
 				mat SiggamChol = arma::chol(Siggam);
-				vec gtmp(nw*J);
-				std::generate(gtmp.begin(), gtmp.end(), ::norm_rand);
+				vec gtmp(nw*J, fill::randn);
 				gamR.col(k) = arma::solve(arma::trimatu(SiggamChol), arma::solve(arma::trimatl(SiggamChol.t()), mugam) + gtmp);
 				for (int j = 0; j < J; ++j) {
 					for (int j2 = 0; j2 < nn; ++j2) {
@@ -306,8 +304,7 @@ Rcpp::List fmodel4p(const arma::mat& Outcome,
 			}
 
 			// Update Rho
-			vec U(J*(J-1)/2);
-			std::generate(U.begin(), U.end(), ::norm_rand);
+			vec U(J*(J-1)/2, fill::randn);
 			vec vRhop = vRho + SS * U;
 			// log-likelihood difference
 			double ll_diff = loglik_vRho_m4p(vRhop, delta, WCovariate, SD, resid, Npt, vRtk, Trial, Second, gamR, d0, nu0, N, J, K, T, Sigma0inv) - 
@@ -321,7 +318,7 @@ Rcpp::List fmodel4p(const arma::mat& Outcome,
 				++vRho_rates;
 			} else {
 				// delayed rejection
-				std::generate(U.begin(), U.end(), ::norm_rand);
+				U.randn();
 				vec zzz = vRho + std::sqrt(0.5) * (SS * U);
 				vec ystar = zzz - (vRhop - vRho);
 				double log1pxy = std::log1p(-std::min(1.0, std::exp(ll_diff)));
@@ -498,8 +495,7 @@ Rcpp::List fmodel4p(const arma::mat& Outcome,
 				}
 				Sig_theta = 0.5 * (Sig_theta + Sig_theta.t());
 				mat Sig_theta_chol = arma::chol(Sig_theta);
-				vec ttmp(nt);
-				std::generate(ttmp.begin(), ttmp.end(), ::norm_rand);
+				vec ttmp(nt, fill::randn);
 				theta = arma::solve(arma::trimatu(Sig_theta_chol), arma::solve(arma::trimatl(Sig_theta_chol.t()), mu_theta) + ttmp);
 
 				for (int i = 0; i < N; ++i) {
@@ -550,8 +546,7 @@ Rcpp::List fmodel4p(const arma::mat& Outcome,
 					}
 					Siggam = 0.5 * (Siggam + Siggam.t());
 					mat SiggamChol = arma::chol(Siggam);
-					vec gtmp(nw*J);
-					std::generate(gtmp.begin(), gtmp.end(), ::norm_rand);
+					vec gtmp(nw*J, fill::randn);
 					gamR.col(k) = arma::solve(arma::trimatu(SiggamChol), arma::solve(arma::trimatl(SiggamChol.t()), mugam) + gtmp);
 					for (int j = 0; j < J; ++j) {
 						for (int j2 = 0; j2 < nn; ++j2) {
@@ -633,8 +628,7 @@ Rcpp::List fmodel4p(const arma::mat& Outcome,
 				}
 
 				// Update Rho
-				vec U(J*(J-1)/2);
-				std::generate(U.begin(), U.end(), ::norm_rand);
+				vec U(J*(J-1)/2, fill::randn);
 				vec vRhop = vRho + SS * U;
 				// log-likelihood difference
 				double ll_diff = loglik_vRho_m4p(vRhop, delta, WCovariate, SD, resid, Npt, vRtk, Trial, Second, gamR, d0, nu0, N, J, K, T, Sigma0inv) - 
@@ -648,7 +642,7 @@ Rcpp::List fmodel4p(const arma::mat& Outcome,
 					++vRho_rates;
 				} else {
 					// delayed rejection
-					std::generate(U.begin(), U.end(), ::norm_rand);
+					U.randn();
 					vec zzz = vRho + std::sqrt(0.5) * (SS * U);
 					vec ystar = zzz - (vRhop - vRho);
 					double log1pxy = std::log1p(-std::min(1.0, std::exp(ll_diff)));

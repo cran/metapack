@@ -12,43 +12,44 @@
 
 <meta name="author" content="Daeyoung Lim" />
 
-<meta name="date" content="2021-07-19" />
+<meta name="date" content="2021-10-20" />
 
 <title>Introduction to metapack</title>
 
-<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
-// v0.0.1
-// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
 
-document.addEventListener('DOMContentLoaded', function() {
-  const codeList = document.getElementsByClassName("sourceCode");
-  for (var i = 0; i < codeList.length; i++) {
-    var linkList = codeList[i].getElementsByTagName('a');
-    for (var j = 0; j < linkList.length; j++) {
-      if (linkList[j].innerHTML === "") {
-        linkList[j].setAttribute('aria-hidden', 'true');
-      }
-    }
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
-});
-</script>
-
-
-<style type="text/css">code{white-space: pre;}</style>
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -68,7 +69,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -125,187 +126,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
 }
-#TOC ul ul {
-margin-left: -2em;
+div.csl-indent {
+  margin-left: 2em;
 }
-#TOC li {
-line-height: 16px;
-}
-table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
-}
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
-
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; } 
-code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
 
 
 
@@ -319,7 +163,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Introduction to metapack</h1>
 <h4 class="author">Daeyoung Lim</h4>
-<h4 class="date">2021-07-19</h4>
+<h4 class="date">2021-10-20</h4>
 
 
 
@@ -332,7 +176,7 @@ MathJax.Hub.Config({
 <h3>Table of Contents</h3>
 <ul>
 <li><a href="#meta-data">Meta-analytic data</a></li>
-<li><a href="#meta-analyze"><code>meta_analyze</code></a>
+<li><a href="#meta-analyze"><code>bmeta_analyze</code></a>
 <ul>
 <li><a href="#using-formula">Using <code>Formula</code></a></li>
 <li><a href="#arguments">Function arguments</a></li>
@@ -348,13 +192,13 @@ MathJax.Hub.Config({
 <p>Meta-analytic data is largely characterized in three ways: univariate or multivariate, meta-analysis or network meta-analysis, and aggregate data or individual participant data. All other modeling choices fall into prior specification. For aggregate-data models, the standard data format is shown in the following table: <a name="table-1"></a></p>
 <table>
 <colgroup>
-<col width="16%"></col>
-<col width="7%"></col>
-<col width="21%"></col>
-<col width="21%"></col>
-<col width="12%"></col>
-<col width="12%"></col>
-<col width="8%"></col>
+<col width="16%" />
+<col width="7%" />
+<col width="21%" />
+<col width="21%" />
+<col width="12%" />
+<col width="12%" />
+<col width="8%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -409,18 +253,18 @@ MathJax.Hub.Config({
 <p>Outcome is the response(s), Std.Dev is the standard deviation(s) of the response(s), XCovariate and WCovariate are the design matrices, and Npt is the trial sample sizes. The pair of trial and treatment indicators is unique to a specific row. Individual participant data obviously doesn’t have Std.Dev and Npt.</p>
 </div>
 <div id="meta-analyze" class="section level2">
-<h2><code>meta_analyze</code></h2>
-<p><code>meta_analyze</code> is the main function in <strong>metapack</strong> that supersedes and subsumes all previous worker functions. <code>meta_analyze</code> internally parses the formula and identifies the model, which ultimately passes the arguments to a suitable worker function. The vanilla <strong>formula</strong> class lacks <em>parts</em> and should strictly have one left-hand side (LHS) and one right-hand side (RHS). <strong>Formula</strong> <span class="citation">(Zeileis and Croissant 2010)</span> extends this formula interface to allow multiple parts and multiple responses, lending itself well into (network) meta-analysis.</p>
+<h2><code>bmeta_analyze</code></h2>
+<p><code>bmeta_analyze</code> is the main function in <strong>metapack</strong> that supersedes and subsumes all previous worker functions. <code>bmeta_analyze</code> internally parses the formula and identifies the model, which ultimately passes the arguments to a suitable worker function. The vanilla <strong>formula</strong> class lacks <em>parts</em> and should strictly have one left-hand side (LHS) and one right-hand side (RHS). <strong>Formula</strong> <span class="citation">(Zeileis and Croissant 2010)</span> extends this formula interface to allow multiple parts and multiple responses, lending itself well into (network) meta-analysis.</p>
 <p>Aside from the model-specific arguments, <code>control</code> has two items universally applicable: <code>scale_x</code> and <code>verbose</code>. When <code>TRUE</code>, the former standardizes the fixed-effects design matrix, and the latter allows printing the progress bar of the Markov chain Monte Carlo algorithm. Both default to <code>FALSE</code> if not provided. Note that if <code>scale_x</code> is <code>TRUE</code>, the subsequent methods like <code>print</code>, <code>summary</code>, or <code>coef</code> will revert the scaling to their original units. If this behavior is not desired, scale the variables explicitly in the formula.</p>
 <div id="using-formula" class="section level3">
 <h3>Using <code>Formula</code></h3>
-<p>Each <em>part</em> in LHS or RHS is an R expression where variables (or functions of variables) are chained with a plus sign (<code>+</code>), e.g., <code>x1 + x2</code>. The tilde (<code>~</code>) separates all LHS’s from all RHS’s, each side further broken down into parts by vertical bars (<code>|</code>). The meaning of each part is syntactically determined by its location within a formula, like the English language. Therefore, the order must be observed as presribed for <code>meta_analyze</code> to correctly identify and configure the model.</p>
+<p>Each <em>part</em> in LHS or RHS is an R expression where variables (or functions of variables) are chained with a plus sign (<code>+</code>), e.g., <code>x1 + x2</code>. The tilde (<code>~</code>) separates all LHS’s from all RHS’s, each side further broken down into parts by vertical bars (<code>|</code>). The meaning of each part is syntactically determined by its location within a formula, like the English language. Therefore, the order must be observed as presribed for <code>bmeta_analyze</code> to correctly identify and configure the model.</p>
 <p>Capitalizing on the unique data structure of meta-analysis data, the general form of the formula is as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>y1 <span class="op">+</span><span class="st"> </span>y2 <span class="op">|</span><span class="st"> </span>sd1 <span class="op">+</span><span class="st"> </span>sd2 <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span><span class="kw">ns</span>(n) <span class="op">|</span><span class="st"> </span>z1 <span class="op">+</span><span class="st"> </span>z2 <span class="op">+</span><span class="st"> </span>z3 <span class="op">|</span><span class="st"> </span>treat <span class="op">+</span><span class="st"> </span><span class="kw">trial</span> (<span class="op">+</span><span class="st"> </span>groups)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>y1 <span class="sc">+</span> y2 <span class="sc">|</span> sd1 <span class="sc">+</span> sd2 <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> <span class="fu">ns</span>(n) <span class="sc">|</span> z1 <span class="sc">+</span> z2 <span class="sc">+</span> z3 <span class="sc">|</span> treat <span class="sc">+</span> <span class="fu">trial</span> (<span class="sc">+</span> groups)</span></code></pre></div>
 <ul>
 <li>The first LHS (<code>y1 + y2</code>), the responses, is required of all models. Depending on the number of variables given in the first LHS, the model is either univariate or multivariate.</li>
-<li>The second LHS (<code>sd1 + sd2</code>) supplies the standard deviations of the endpoints required of an aggregate-data meta-analysis. Currently, with no IPD models implemented, <code>meta_analyze</code> will break if this part is missing; however, in the coming weeks, this requirement will be relaxed with the introduction of IPD models.</li>
-<li>The first RHS (<code>x1 + x2 + x3 + ns(n)</code>) defines the fixed-effects covariates. For aggregate-data models, the trial sample sizes must be passed as an argument to <code>ns()</code>. In the example code, <code>n</code> is the variable containing the trial sample sizes. IPD models do not have trial samples sizes. In fact, <code>meta_analyze</code> checks the existence of <code>ns()</code> to determine whether it’s aggregate data.</li>
+<li>The second LHS (<code>sd1 + sd2</code>) supplies the standard deviations of the endpoints required of an aggregate-data meta-analysis. Currently, with no IPD models implemented, <code>bmeta_analyze</code> will break if this part is missing; however, in the coming weeks, this requirement will be relaxed with the introduction of IPD models.</li>
+<li>The first RHS (<code>x1 + x2 + x3 + ns(n)</code>) defines the fixed-effects covariates. For aggregate-data models, the trial sample sizes must be passed as an argument to <code>ns()</code>. In the example code, <code>n</code> is the variable containing the trial sample sizes. IPD models do not have trial samples sizes. In fact, <code>bmeta_analyze</code> checks the existence of <code>ns()</code> to determine whether it’s aggregate data.</li>
 <li>The second RHS (<code>z1 + z2 + z3</code>) defines either the random-effects covariates (e.g., <span class="math inline">\(w_{tk}^\top\boldsymbol{\gamma}\)</span>) or the variance-related covariates (e.g., <span class="math inline">\(\log \tau = z_{tk}^\top \boldsymbol{\phi}\)</span>)—see <a href="#appx">Appendix</a>.</li>
 <li>The third RHS (<code>treat + trial</code> or <code>treat + trial + groups</code>) corresponds to the treatment and trial indicators, and optionally the grouping variable if it exists. Variables here must be provided in the exact order shown in the example. If variables for this part are not already factors, they are coerced to extract the levels and number of levels—and <em>unfactored</em> afterward.</li>
 </ul>
@@ -437,7 +281,7 @@ MathJax.Hub.Config({
 </div>
 </div>
 <div id="bayes-parobs" class="section level2">
-<h2>Use case 1 - (multivariate) meta-analysis with <code>meta_analyze</code></h2>
+<h2>Use case 1 - (multivariate) meta-analysis with <code>bmeta_analyze</code></h2>
 <p>Univariate meta-analysis can be specified with one response endpoint and two treatments, except that the covariance modeling must be “NoRecovery”.</p>
 <p>Multivariate meta-analysis is characterized by multiple response endpoints and two treatments. Additionally, multivariate meta-analysis requires a model for the covariance matrix to be specified as <code>model</code> in the <code>prior</code> argument—which defaults to <code>model=NoRecovery</code> if left unspecified. The available options are listed below. The objects parenthesized at the end of every bullet point are the hyperparameters associated with each model.</p>
 <p><a name="model-spec"></a></p>
@@ -449,21 +293,21 @@ MathJax.Hub.Config({
 <li><code>model=&quot;Hierarchical&quot;</code> - The fifth model is hierarchical and thus may require more data than the others: <span class="math inline">\((\Sigma_{tk}^{-1}\mid \Sigma)\sim \mathcal{W}_{\nu_0}((\nu_0-J-1)^{-1}\Sigma^{-1})\)</span> and <span class="math inline">\(\Sigma \sim \mathcal{W}_{d_0}(\Sigma_0)\)</span>. <span class="math inline">\(\Sigma_{tk}\)</span> encodes the within-treatment-arm variation while <span class="math inline">\(\Sigma\)</span> captures the between-treatment-arm variation. The hierarchical structure allows the “borrowing of strength” across treatment arms. (<code>c0</code>, <code>dj0</code>, <code>d0</code>, <code>nu0</code>, <code>Sigma0</code>, <code>Omega0</code>)</li>
 </ul>
 <p>The boilerplate code for multivariate meta-analysis is as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>f &lt;-<span class="st"> &quot;y1 + y2 | sd1 + sd2 ~ x1 + x2 + x3 + ns(n) | z1 + z2 + z3 | treat + trial + groups&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>out &lt;-<span class="st"> </span><span class="kw">meta_analyze</span>(<span class="kw">formula</span>(f), <span class="dt">data =</span> df,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>        <span class="dt">mcmc =</span> <span class="kw">list</span>(<span class="dt">ndiscard =</span> <span class="dv">20000</span>, <span class="dt">nskip =</span> <span class="dv">5</span>, <span class="dt">nkeep =</span> <span class="dv">10000</span>),</span>
-<span id="cb2-4"><a href="#cb2-4"></a>        <span class="dt">prior =</span> <span class="kw">list</span>(<span class="dt">model =</span> <span class="st">&quot;NoRecovery&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="st">&quot;y1 + y2 | sd1 + sd2 ~ x1 + x2 + x3 + ns(n) | z1 + z2 + z3 | treat + trial + groups&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">bmeta_analyze</span>(<span class="fu">formula</span>(f), <span class="at">data =</span> df,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">mcmc =</span> <span class="fu">list</span>(<span class="at">ndiscard =</span> <span class="dv">20000</span>, <span class="at">nskip =</span> <span class="dv">5</span>, <span class="at">nkeep =</span> <span class="dv">10000</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">prior =</span> <span class="fu">list</span>(<span class="at">model =</span> <span class="st">&quot;NoRecovery&quot;</span>))</span></code></pre></div>
 <p>Except <code>model=&quot;NoRecovery&quot;</code>, all else uses <code>R_stepsize</code> in the <code>control</code> argument. The fourth option—<code>model=EquiCorrelation</code>—allows sampling <span class="math inline">\(\boldsymbol{\rho}\)</span>. However, researchers oftentimes have a rough—or concrete—idea about the correlation values, and therefore fixing <span class="math inline">\(\boldsymbol{\rho}\)</span> makes sense. That edge case can be accomplished through setting <code>sample_Rho=FALSE</code> in <code>control</code> and <code>Rho=&lt;some_matrix&gt;</code> in <code>init</code>. If <code>sample_Rho=FALSE</code> but no initial value for <code>Rho</code> is given, it will default to 0.5 (<span class="math inline">\(\boldsymbol{\rho}=0.5\boldsymbol{I}+0.5\boldsymbol{1}\boldsymbol{1}^\top\)</span>). In full form,</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Rho_init &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">3</span>) <span class="co"># assume 3 by 3</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>Rho_init[<span class="kw">upper.tri</span>(Rho_init)] &lt;-<span class="st"> </span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="st">    </span>Rho_init[<span class="kw">lower.tri</span>(Rho_init)] &lt;-<span class="st"> </span><span class="fl">0.2</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>out &lt;-<span class="st"> </span><span class="kw">meta_analyze</span>(<span class="kw">formula</span>(f), <span class="dt">data =</span> df,</span>
-<span id="cb3-5"><a href="#cb3-5"></a>        <span class="dt">prior =</span> <span class="kw">list</span>(<span class="dt">model =</span> <span class="st">&quot;EquiCorr&quot;</span>), <span class="co"># abbreviation allowed</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>        <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">sample_Rho =</span> <span class="ot">FALSE</span>),</span>
-<span id="cb3-7"><a href="#cb3-7"></a>        <span class="dt">init =</span> <span class="kw">list</span>(<span class="dt">Rho =</span> Rho_init))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Rho_init <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">3</span>) <span class="co"># assume 3 by 3</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Rho_init[<span class="fu">upper.tri</span>(Rho_init)] <span class="ot">&lt;-</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    Rho_init[<span class="fu">lower.tri</span>(Rho_init)] <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">bmeta_analyze</span>(<span class="fu">formula</span>(f), <span class="at">data =</span> df,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">prior =</span> <span class="fu">list</span>(<span class="at">model =</span> <span class="st">&quot;EquiCorr&quot;</span>), <span class="co"># abbreviation allowed</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">control =</span> <span class="fu">list</span>(<span class="at">sample_Rho =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">init =</span> <span class="fu">list</span>(<span class="at">Rho =</span> Rho_init))</span></code></pre></div>
 </div>
 <div id="bayes-nmr" class="section level2">
-<h2>Use case 2 - univariate network meta-analysis with <code>meta_analyze</code></h2>
+<h2>Use case 2 - univariate network meta-analysis with <code>bmeta_analyze</code></h2>
 <p>Univariate network meta-analysis is characterized by a single response endpoint and more than two treatments. Similar to <code>model</code> in the multivariate meta-analysis case, the degrees of freedom (<code>df</code>) for the random effects’ multivariate <span class="math inline">\(t\)</span>-distribution are the parameter of interest in univariate network meta-analysis. Objects parenthesized at the end are the hyperparameters associated with the model.</p>
 <ul>
 <li><code>df = &lt;positive_real_value&gt;</code> - the random effects follow a multivariate <span class="math inline">\(t\)</span>-distribution. If <code>df</code> is not provided by the user, it defaults to 20. (<code>c01</code>, <code>c02</code>)</li>
@@ -471,25 +315,25 @@ MathJax.Hub.Config({
 <li><code>sample_df=TRUE</code> in <code>control</code> - the random effects follow a multivariate <span class="math inline">\(t\)</span>-distribution but the degrees of freedom are treated as random, in which case a hierarchical prior distribution is considered for <code>df</code>. That is, <code>(df | nu_a, nu_b) ~ Ga(nu_a, nu_a / nu_b)</code>, <code>nu_a ~ Ga(a4, b4)</code>, and <code>nu_b ~ IG(a5, b5)</code>. (<code>c01</code>, <code>c02</code>, <code>a4</code>, <code>b4</code>, <code>a5</code>, <code>b5</code>)</li>
 </ul>
 <p>The boilerplate code for univariate network meta-analysis is as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>f &lt;-<span class="st"> &quot;y | sd ~ x1 + x2 + x3 + ns(n) | z1 + z2 + z3 | treat + trial&quot;</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>out &lt;-<span class="st"> </span><span class="kw">meta_analyze</span>(<span class="kw">formula</span>(f), <span class="dt">data =</span> df,</span>
-<span id="cb4-3"><a href="#cb4-3"></a>        <span class="dt">mcmc =</span> <span class="kw">list</span>(<span class="dt">discard =</span> <span class="dv">20000</span>, <span class="dt">nskip =</span> <span class="dv">5</span>, <span class="dt">nkeep =</span> <span class="dv">10000</span>),</span>
-<span id="cb4-4"><a href="#cb4-4"></a>        <span class="dt">prior =</span> <span class="kw">list</span>(<span class="dt">df =</span> <span class="dv">3</span>)) <span class="co"># heavy-tailed random effects</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="st">&quot;y | sd ~ x1 + x2 + x3 + ns(n) | z1 + z2 + z3 | treat + trial&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">bmeta_analyze</span>(<span class="fu">formula</span>(f), <span class="at">data =</span> df,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">mcmc =</span> <span class="fu">list</span>(<span class="at">discard =</span> <span class="dv">20000</span>, <span class="at">nskip =</span> <span class="dv">5</span>, <span class="at">nkeep =</span> <span class="dv">10000</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">prior =</span> <span class="fu">list</span>(<span class="at">df =</span> <span class="dv">3</span>)) <span class="co"># heavy-tailed random effects</span></span></code></pre></div>
 <p>If <code>control=list(sample_df=TRUE)</code>, the <code>df</code> value in <code>prior</code> is ignored. Identically to the multivariate meta-analysis case, <code>sample_Rho</code> can be set to <code>FALSE</code> to suppress the sampling of <code>Rho</code>, and <code>Rho</code> will be initialized using the corresponding value in <code>init</code>, which defaults to 0.5 (<span class="math inline">\(\boldsymbol{\rho}=0.5\boldsymbol{I}+0.5\boldsymbol{1}\boldsymbol{1}^\top\)</span>). The correlation matrix <code>Rho</code> for univariate network meta-analysis belongs to the random effects, <strong>not</strong> the responses.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Rho_init &lt;-<span class="st"> </span><span class="kw">diag</span>(nT) <span class="co"># nT = the number of treatments</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>Rho_init[<span class="kw">upper.tri</span>(Rho_init)] &lt;-<span class="st"> </span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="st">    </span>Rho_init[<span class="kw">lower.tri</span>(Rho_init)] &lt;-<span class="st"> </span><span class="fl">0.2</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>out &lt;-<span class="st"> </span><span class="kw">meta_analyze</span>(<span class="kw">formula</span>(f), <span class="dt">data =</span> df,</span>
-<span id="cb5-5"><a href="#cb5-5"></a>        <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">sample_df =</span> <span class="ot">TRUE</span>, <span class="dt">sample_Rho =</span> <span class="ot">FALSE</span>),</span>
-<span id="cb5-6"><a href="#cb5-6"></a>        <span class="dt">init =</span> <span class="kw">list</span>(<span class="dt">Rho =</span> Rho_init))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Rho_init <span class="ot">&lt;-</span> <span class="fu">diag</span>(nT) <span class="co"># nT = the number of treatments</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Rho_init[<span class="fu">upper.tri</span>(Rho_init)] <span class="ot">&lt;-</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    Rho_init[<span class="fu">lower.tri</span>(Rho_init)] <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">bmeta_analyze</span>(<span class="fu">formula</span>(f), <span class="at">data =</span> df,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">control =</span> <span class="fu">list</span>(<span class="at">sample_df =</span> <span class="cn">TRUE</span>, <span class="at">sample_Rho =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">init =</span> <span class="fu">list</span>(<span class="at">Rho =</span> Rho_init))</span></code></pre></div>
 <p>Sometimes, there is no covariate information available for modeling the variances. The second RHS can be a vector of ones, which reduces the model to have <span class="math inline">\(\mathrm{Var}(\overline{y}_{tk})=\sigma_{tk}^2/n_{tk} + \exp(2\phi)\)</span> for every <span class="math inline">\((t,k)\)</span>. Users can simply do without the second RHS in this case—the second RHS technically exists but is the treatment and trial configuration. An example formula is as follows:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>f &lt;-<span class="st"> &quot;y | sd ~ x1 + x2 + x3 + ns(n) | treat + trial&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="st">&quot;y | sd ~ x1 + x2 + x3 + ns(n) | treat + trial&quot;</span></span></code></pre></div>
 </div>
 <div id="appx" class="section level2">
 <h2>Appendix</h2>
 <div id="multivariate-meta-analysis-model" class="section level4">
 <h4>Multivariate meta-analysis model</h4>
-<p>When there are multiple endpoints, the correlations thereof are oftentimes unreported. In a meta-regression setting, the correlations are something we want to know. In the case of subject-level meta-analyses (where individual participant/patient data are available), the correlations may only be one function call away. However, for study-level meta-analyses, the correlations must be estimated, which is not an easy task. <code>meta_analyze</code> provides five different models to estimate and recover the missing correlations.</p>
+<p>When there are multiple endpoints, the correlations thereof are oftentimes unreported. In a meta-regression setting, the correlations are something we want to know. In the case of subject-level meta-analyses (where individual participant/patient data are available), the correlations may only be one function call away. However, for study-level meta-analyses, the correlations must be estimated, which is not an easy task. <code>bmeta_analyze</code> provides five different models to estimate and recover the missing correlations.</p>
 <p>Since the aforementioned setting regards the correlations as missing, the reported data are <span class="math inline">\((\overline{\boldsymbol{y}}_{\cdot tk}, \boldsymbol{s}_{tk}) \in \mathbf{R}^J \times \mathbf{R}^J\)</span> for the <span class="math inline">\(t\)</span>th treatment arm and <span class="math inline">\(k\)</span>th trial. Every trial out of <span class="math inline">\(K\)</span> trials includes <span class="math inline">\(T\)</span> treatment arms. The sample size of the <span class="math inline">\(t\)</span>th treatment arm and <span class="math inline">\(k\)</span>th trial is denoted by <span class="math inline">\(n_{tk}\)</span>. If we write <span class="math inline">\(\boldsymbol{x}_{tkj}\in \mathbf{R}^{p_j}\)</span> to be the treatment-within-trial level regressor corresponding to the <span class="math inline">\(j\)</span>th response, reflecting the fixed effects of the <span class="math inline">\(t\)</span>th treatment arm, and <span class="math inline">\(\boldsymbol{w}_{tkj}\in \mathbf{R}^{q_j}\)</span> to be the same for the random effects, the model becomes</p>
 <p><span class="math display">\[\begin{equation}\label{eq:reduced-model}
 \overline{\boldsymbol{y}}_{\cdot tk} = \boldsymbol{X}_{tk}\boldsymbol{\beta} + \boldsymbol{W}_{tk}\boldsymbol{\gamma}_k + \overline{\boldsymbol{\epsilon}}_{\cdot tk},
@@ -543,13 +387,13 @@ f(R_{tk}\mid V_{tk},\Sigma_{tk}) \propto |R_{tk}|^{(n_{tk}-J-2)/2}\exp\left\{-\d
 </div>
 </div>
 <div id="references" class="section level2 unnumbered">
-<h2>References</h2>
-<div id="refs" class="references">
-<div id="ref-bernardo2003non">
-<p>Bernardo, JM, MJ Bayarri, JO Berger, AP Dawid, D Heckerman, AFM Smith, and M West. 2003. “Non-Centered Parameterisations for Hierarchical Models and Data Augmentation.” In <em>Bayesian Statistics 7: Proceedings of the Seventh Valencia International Meeting</em>. Vol. 307. Oxford University Press, USA.</p>
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-bernardo2003non" class="csl-entry">
+Bernardo, JM, MJ Bayarri, JO Berger, AP Dawid, D Heckerman, AFM Smith, and M West. 2003. <span>“Non-Centered Parameterisations for Hierarchical Models and Data Augmentation.”</span> In <em>Bayesian Statistics 7: Proceedings of the Seventh Valencia International Meeting</em>. Vol. 307. Oxford University Press, USA.
 </div>
-<div id="ref-Formula2010">
-<p>Zeileis, Achim, and Yves Croissant. 2010. “Extended Model Formulas in R: Multiple Parts and Multiple Responses.” <em>Journal of Statistical Software</em> 34 (1): 1–13. <a href="https://doi.org/10.18637/jss.v034.i01">https://doi.org/10.18637/jss.v034.i01</a>.</p>
+<div id="ref-Formula2010" class="csl-entry">
+Zeileis, Achim, and Yves Croissant. 2010. <span>“Extended Model Formulas in <span>R</span>: Multiple Parts and Multiple Responses.”</span> <em>Journal of Statistical Software</em> 34 (1): 1–13. <a href="https://doi.org/10.18637/jss.v034.i01">https://doi.org/10.18637/jss.v034.i01</a>.
 </div>
 </div>
 </div>

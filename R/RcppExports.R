@@ -69,14 +69,6 @@ mhpd <- function(x, alpha) {
     .Call(`_metapack_mhpd`, x, alpha)
 }
 
-pRho_to_Rho <- function(pRho) {
-    .Call(`_metapack_pRho_to_Rho`, pRho)
-}
-
-Rho_to_pRho <- function(Rho) {
-    .Call(`_metapack_Rho_to_pRho`, Rho)
-}
-
 calc_modelfit_pearson <- function(resid, npt, sig2s, nkeep, verbose) {
     .Call(`_metapack_calc_modelfit_pearson`, resid, npt, sig2s, nkeep, verbose)
 }
