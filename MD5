@@ -1,6 +1,6 @@
-80468ab8e5aeee97bf71ff416d861cd9 *DESCRIPTION
+1e9c67a8b8e954b93e24e0464babe10e *DESCRIPTION
 2ab9d4eb29943358236087d84649b27c *NAMESPACE
-81aabcd8336ea05ccade20f83a391e0c *NEWS.md
+5b63d283c37264e4b4763f5c90f37f77 *NEWS.md
 424a4d2bdf3a6f6832509677ff2b9280 *R/BayesNMR.R
 752ea0d7ae7193e2de0a115bab4a944e *R/RcppExports.R
 ecef81935f3f92de69ae17f5d8064283 *R/bayes.parobs.R
@@ -37,7 +37,7 @@ d88fdb65420ef314c3ab565e4864a084 *inst/CITATION
 22cce331209933cb7789d08922fd480f *inst/bib/metapack.bib
 5cd8bd8e872f03c472b71a6440c9099d *inst/doc/intro-to-metapack.R
 1c03c8f288e19f408245cd2193c1f7bc *inst/doc/intro-to-metapack.Rmd
-be397191df38e6bd5bebc8e45dcfb50c *inst/doc/intro-to-metapack.html
+4d0d43ec88c28d2070dff3a59949afb5 *inst/doc/intro-to-metapack.html
 bd63c640437298610d24e9a04dd5c022 *man/TNM.Rd
 68d0ab8507431fc9c8846b696b475026 *man/bayes.nmr.Rd
 5af009391ae1f8698e564675271e941e *man/bayes.parobs.Rd
@@ -74,15 +74,15 @@ f01e8316736289db26a9027d0ad9aef3 *src/fmodel2.cpp
 1e8b65924b485d5a28c30b4f93c4579d *src/fmodel2p.cpp
 e7bde33427f526a150fed69639ae8eea *src/fmodel2p5.cpp
 b491ebd6ae4087c848c7fe6ecdc466a8 *src/fmodel2p5p.cpp
-dcb5d7f238fb4d4f73b08d6c09d3d762 *src/fmodel3.cpp
-3d3d3acad62e6e7cadaf11d0fa499287 *src/fmodel3pp.cpp
+2c8a3ad267e8610641cc63b67d751f02 *src/fmodel3.cpp
+dbcd660807bd9d452a29513678a63288 *src/fmodel3pp.cpp
 331e9f6be97acc157af0c77877ecf1f0 *src/fmodel4.cpp
 7c46531e5a8838b1b5e293725f8406d0 *src/fmodel4p.cpp
 55c149d3ba4ca3d45b24ca3a2288835e *src/gof_parcov.cpp
 9459a3a361b06174246f17100a5185d6 *src/hpd.cpp
 5eeb3542811f4e3481f1d1f974d54090 *src/linearalgebra.cpp
 d874a45a03c27e7cf0c72b2478c0bdd6 *src/linearalgebra.h
-91935c0028fdff90ed72ce2b59eea10d *src/loglik_POCov.cpp
+3dd014dc7f6149ad9ec927f6ca0ffd55 *src/loglik_POCov.cpp
 3aa0bd75b55eeaafc1fc7d76f240666a *src/loglik_POCov.h
 e9cf6d477b6ea8c49c0210455d81b7dd *src/lpml_nmr.cpp
 09ea485c73b9ac14e5bcd8f16c00ba64 *src/misc_nmr.cpp
