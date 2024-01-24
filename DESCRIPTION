@@ -1,10 +1,10 @@
 Package: metapack
 Type: Package
 Title: Bayesian Meta-Analysis and Network Meta-Analysis
-Version: 0.2.0
-Date: 2022-05-28
+Version: 0.3
+Date: 2024-01-14
 Authors@R: c(
-	person("Daeyoung", "Lim", email = "daeyoung.lim@uconn.edu",
+	person("Daeyoung", "Lim", email = "Daeyoung.Lim@fda.hhs.gov",
 	role = c("aut", "cre")),
 	person("Ming-Hui", "Chen", email = "ming-hui.chen@uconn.edu",
 	role = "ctb"),
@@ -26,15 +26,15 @@ Depends: R (>= 3.4)
 LinkingTo: Rcpp, RcppArmadillo, RcppProgress, BH
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
-URL: http://merlot.stat.uconn.edu/packages/metapack/
+URL: https://events.stat.uconn.edu/metapack/
 BugReports: https://github.com/daeyounglim/metapack/issues
-Packaged: 2022-05-30 14:27:05 UTC; daeyounglim
+Packaged: 2024-01-23 17:06:22 UTC; daeyounglim
 Author: Daeyoung Lim [aut, cre],
   Ming-Hui Chen [ctb],
   Sungduk Kim [ctb],
   Joseph Ibrahim [ctb],
   Arvind Shah [ctb],
   Jianxin Lin [ctb]
-Maintainer: Daeyoung Lim <daeyoung.lim@uconn.edu>
+Maintainer: Daeyoung Lim <Daeyoung.Lim@fda.hhs.gov>
 Repository: CRAN
-Date/Publication: 2022-05-30 18:30:08 UTC
+Date/Publication: 2024-01-24 17:10:02 UTC
